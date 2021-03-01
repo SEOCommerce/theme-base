@@ -56,8 +56,8 @@ class Install extends ThemeCommand
             $baseViewIterator = new \RecursiveDirectoryIterator($installViewPath);
             foreach(new \RecursiveIteratorIterator($baseViewIterator) as $file) {
 
-                // Skip if not .blade.php
-                if (!preg_match('/\.blade\.php$/i', (string) $file)) {
+                // Skip if not .php
+                if (!preg_match('/\.php$/i', (string) $file)) {
                     continue;
                 }
 
@@ -74,7 +74,8 @@ class Install extends ThemeCommand
                     }
 
                     $relativeBladePath = str_replace('/', '.', $relativePath);
-                    $relativeBladePath = preg_replace('/\.blade\.php$/i', '', $relativeBladePath);
+                    $relativeBladePath = preg_replace('/\.php$/i', '', $relativeBladePath);
+                    $relativeBladePath = preg_replace('/\.blade$/i', '', $relativeBladePath);
                     $filesystem->touch($proxyViewPath);
                     $filesystem->dumpFile($proxyViewPath, '@include(config(\'app.theme\').\'::_base.'.$relativeBladePath.'\')');
                 }
