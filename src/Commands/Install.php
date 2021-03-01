@@ -77,7 +77,7 @@ class Install extends ThemeCommand
                     $relativeBladePath = preg_replace('/\.php$/i', '', $relativeBladePath);
                     $relativeBladePath = preg_replace('/\.blade$/i', '', $relativeBladePath);
                     $filesystem->touch($proxyViewPath);
-                    $filesystem->dumpFile($proxyViewPath, '@include(config(\'app.theme\').\'::_base.'.$relativeBladePath.'\')');
+                    $filesystem->dumpFile($proxyViewPath, preg_match('/\.blade\.php/i', $relativePath) ? '@include(config(\'app.theme\').\'::_base.'.$relativeBladePath.'\')' : '<?php echo view(config(\'app.theme\').\'::_base.'.$relativeBladePath.'\'); ?>');
                 }
             }
 
